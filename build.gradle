@@ -1,0 +1,37 @@
+buildscript {
+    ext {
+        spockVersion = "1.2-groovy-2.5"
+        groovyVersion = "2.5.6"
+    }
+    repositories {
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: "groovy"
+apply plugin: 'idea'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots/'
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+[compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.encoding = "UTF-8"
+[compileJava, compileTestJava, compileGroovy, compileTestGroovy]*.options*.compilerArgs = ["-Xlint:all"]
+
+ext["groovy.version"] = groovyVersion
+
+dependencies {
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    testCompile "org.spockframework:spock-core:${spockVersion}"
+    testCompile 'com.sikulix:sikulixlibswin:1.1.1'
+    testCompile ('com.sikulix:sikulixapi:1.1.2'){
+        exclude group: 'com.sikulix', module: '${sikulix.libs}'
+        exclude group: 'com.github.vidstige', module: 'jadb'
+    }
+}
