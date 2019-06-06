@@ -1,15 +1,15 @@
 package sitimi
 
-class Window {
-    //TODO static at = {} にしたい
-    def at(){
-        true
+class Application {
+    static path = ""
+    //TODO static startOperation = {} にしたい
+    def startOperation(){
+
     }
 
-    //TODO メソッドじゃなくて static content = {} にしたい
 
     private Computer computer_
-    Window init(Computer computer){
+    Application init(Computer computer){
         computer_ = computer
         this
     }

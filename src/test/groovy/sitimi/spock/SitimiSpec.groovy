@@ -1,17 +1,20 @@
 package sitimi.spock
 
-import sitimi.ScreenX
+
+import sitimi.Computer
+import spock.lang.Shared
 import spock.lang.Specification
 
 class SitimiSpec extends Specification{
-    ScreenX screen
+    @Shared
+    Computer computer_
 
-    ScreenX getScreen(){
-        screen
+    Computer getComputer(){
+        computer_
     }
 
     def setup(){
-        screen = new ScreenX()
+        computer_ = new Computer()
         //TODO アプリの起動
     }
 
@@ -20,14 +23,14 @@ class SitimiSpec extends Specification{
     }
 
     def methodMissing(String name, args) {
-        getScreen()."$name"(*args)
+        getComputer()."$name"(*args)
     }
 
     def propertyMissing(String name) {
-        getScreen()."$name"
+        getComputer()."$name"
     }
 
     def propertyMissing(String name, value) {
-        getScreen()."$name" = value
+        getComputer()."$name" = value
     }
 }
