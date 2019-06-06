@@ -1,0 +1,4 @@
+package sitimi
+
+class Window {
+}
