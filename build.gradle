@@ -12,6 +12,14 @@ apply plugin: 'java'
 apply plugin: "groovy"
 apply plugin: 'idea'
 
+version = '0.0.1'
+group = 'sitimi'
+
+
+jar{
+    archiveBaseName = 'sitimi'
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -28,10 +36,10 @@ ext["groovy.version"] = groovyVersion
 
 dependencies {
     compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
-    testCompile "org.spockframework:spock-core:${spockVersion}"
-    testCompile 'com.sikulix:sikulixlibswin:1.1.1'
-    testCompile ('com.sikulix:sikulixapi:1.1.2'){
+    compile "org.spockframework:spock-core:${spockVersion}"
+    compile ('com.sikulix:sikulixapi:1.1.2'){
         exclude group: 'com.sikulix', module: '${sikulix.libs}'
         exclude group: 'com.github.vidstige', module: 'jadb'
     }
+    testCompile 'com.sikulix:sikulixlibswin:1.1.1'
 }
