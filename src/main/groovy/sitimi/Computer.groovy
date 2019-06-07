@@ -17,32 +17,35 @@ class Computer {
         window_
     }
 
+    private Screen getScreen(){
+        s
+    }
+
     def methodMissing(String name, args) {
-        getWindow()."$name"(*args)
+        args = args.collect { it instanceof GString ? it.toString() : it }
+        try{
+            getScreen()."$name"(*args)
+        }catch(MissingMethodException e){
+            getWindow()."$name"(*args)
+        }
     }
 
     def propertyMissing(String name) {
-        getWindow()."$name"
+        try{
+            getScreen()."$name"
+        }catch(MissingPropertyException e){
+            getWindow()."$name"
+        }
     }
 
     def propertyMissing(String name, value) {
-        getWindow()."$name" = value
+        value = value instanceof GString ? value.toString() : value
+        try{
+            getScreen()."$name" = value
+        }catch(MissingPropertyException e){
+            getWindow()."$name" = value
+        }
     }
-
-//TODO このへんScreenWrapperに移すかも
-    def click(String img){
-        s.click img
-    }
-
-    def write(String text){
-        s.write(text)
-    }
-
-    boolean exists(String expectedIimg){
-        s.exists expectedIimg
-    }
-
-//-- ここまで
 
     public <T extends Application> void start(Class<T> a) {
         start(createApplication(a))

@@ -137,5 +137,3 @@ class SimpleCalcSpec extends SitimiSpec{
 # Operation
 
 The methods provided by Sikuli's Screen(org.sikuli.script.Screen) can be used as is
-
-Note: 今はいくつかのメソッドしか提供してません近い将来そう直します
