@@ -1,5 +1,6 @@
 package sitimi
 
+import org.sikuli.script.App
 import org.sikuli.script.Screen
 
 class Computer {
@@ -58,7 +59,7 @@ class Computer {
             return
         }
 
-        //TODO app start from path
+        App.open a.path
     }
 
     private <T extends Application> T createApplication(Class<T> clazz){
