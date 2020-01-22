@@ -23,7 +23,6 @@ class Computer {
     }
 
     private hasMethod = {o, name, args ->
-        println args
         if( 1 <= o.metaClass.getMethods().findAll { it.name == name}.count { checkParameters(it, args) } ){
             return true
         }
