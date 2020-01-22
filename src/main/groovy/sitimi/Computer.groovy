@@ -23,7 +23,6 @@ class Computer {
     }
 
     private hasMethod = {o, name, args ->
-        println args
         if( 1 <= o.metaClass.getMethods().findAll { it.name == name}.count { checkParameters(it, args) } ){
             return true
         }
@@ -31,9 +30,6 @@ class Computer {
     }
 
     private checkParameters = {method, args ->
-        if(args.isEmpty()){
-            return true
-        }
         try{
             method.checkParameters(args.collect { it.class }.toArray(new Class[args.size()]))
         }catch(IllegalArgumentException e){
