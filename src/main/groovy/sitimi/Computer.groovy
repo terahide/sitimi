@@ -22,20 +22,46 @@ class Computer {
         s
     }
 
+    private hasMethod = {o, name, args ->
+        println args
+        if( 1 <= o.metaClass.getMethods().findAll { it.name == name}.count { checkParameters(it, args) } ){
+            return true
+        }
+        return false
+    }
+
+    private checkParameters = {method, args ->
+        if(args.isEmpty()){
+            return true
+        }
+        try{
+            method.checkParameters(args.collect { it.class }.toArray(new Class[args.size()]))
+        }catch(IllegalArgumentException e){
+            return false
+        }
+        true
+    }
+
     def methodMissing(String name, args) {
         args = args.collect { it instanceof GString ? it.toString() : it }
         try{
             getScreen()."$name"(*args)
-        }catch(MissingMethodException e){
-            getWindow()."$name"(*args)
+        }catch(MissingMethodException e) {
+            if (hasMethod(getWindow(), name, args)){
+                return getWindow()."$name"(*args)
+            }
+            throw new IllegalStateException("${new MissingMethodException(name, getWindow().class, *args).getMessage()}\r\nor ${e.getMessage()}")
         }
     }
 
     def propertyMissing(String name) {
         try{
             getScreen()."$name"
-        }catch(MissingPropertyException e){
-            getWindow()."$name"
+        }catch(MissingPropertyException e) {
+            if (getWindow().metaClass.hasProperty(getWindow(), name)){
+                return getWindow()."$name"
+            }
+            throw new MissingPropertyException("${new MissingPropertyException(name, getWindow().class).getMessage()}\r\nor ${e.getMessage()}")
         }
     }
 
@@ -43,8 +69,11 @@ class Computer {
         value = value instanceof GString ? value.toString() : value
         try{
             getScreen()."$name" = value
-        }catch(MissingPropertyException e){
-            getWindow()."$name" = value
+        }catch(MissingPropertyException e) {
+            if (getWindow().metaClass.hasProperty(getWindow(), name)){
+                getWindow()."$name" = value
+            }
+            throw new MissingPropertyException("${new MissingPropertyException(name, getWindow().class).getMessage()}\r\nor ${e.getMessage()}")
         }
     }
 
