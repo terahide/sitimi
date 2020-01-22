@@ -30,9 +30,6 @@ class Computer {
     }
 
     private checkParameters = {method, args ->
-        if(args.isEmpty()){
-            return true
-        }
         try{
             method.checkParameters(args.collect { it.class }.toArray(new Class[args.size()]))
         }catch(IllegalArgumentException e){
