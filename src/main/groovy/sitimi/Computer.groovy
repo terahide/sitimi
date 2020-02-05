@@ -87,6 +87,13 @@ class Computer {
         App.open a.path
     }
 
+    def capture(file){
+        def dir = new File('build/reports/tests/evidences')
+        if( ! dir.exists())dir.mkdirs()
+        def image = getScreen().capture()// Screen as SikuliX
+        new File("${file}.png", dir) << new File(image.getFile()).getBytes()
+    }
+
     private <T extends Application> T createApplication(Class<T> clazz){
         clazz.newInstance().init(this)
     }
