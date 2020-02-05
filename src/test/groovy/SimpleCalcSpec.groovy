@@ -1,8 +1,8 @@
 import app.Calc
 import app.CalcWindow
-import sitimi.spock.SitimiSpec
+import sitimi.spock.SitimiReportingSpec
 
-class SimpleCalcSpec extends SitimiSpec{
+class SimpleCalcSpec extends SitimiReportingSpec{
     def cleanup(){
         "ウィンドウを閉じる"()
     }

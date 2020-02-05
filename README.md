@@ -137,3 +137,12 @@ class SimpleCalcSpec extends SitimiSpec{
 # Operation
 
 The methods provided by Sikuli's Screen(org.sikuli.script.Screen) can be used as is
+
+# Report
+
+
+When SitimiReportingSpec is inherited, screen capture is automatically reported at the end of the test and at the time of failure.
+You can also use the report (label) method to get a capture anywhere.
+
+
+The captured file is output to `build/reports/tests/evidences` .
